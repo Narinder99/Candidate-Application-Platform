@@ -1,16 +1,19 @@
 import React, { useRef, useState } from "react";
 import { SingleFilterComponent } from "./SingleFilterComponent";
-
+import { useSelector, useDispatch } from 'react-redux'
+import { addJob} from './Redux/JobsData'
 export const Filters = () => {
 
   const [inputValue, setInputValue] = useState('');
   const [inputWidth, setInputWidth] = useState('100px'); // Initial width
   const inputRef = useRef(null);
+  const Jobs = useSelector(state => state.Jobs.Jobs)
+  const dispatch = useDispatch()
 
   // Function to handle changes in the input value
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
-    updateInputWidth();
+    updateInputWidth();// after every change we have to update the width
   };
 
   const updateInputWidth = () => {
@@ -19,10 +22,6 @@ export const Filters = () => {
     }
   };
 
-  // // Run once at intially when this component will render.
-  // useEffect(() => {
-  //   updateInputWidth();
-  // }, []);
 
   return (
     <div className="flex flex-wrap justify-start  filters m-10">
