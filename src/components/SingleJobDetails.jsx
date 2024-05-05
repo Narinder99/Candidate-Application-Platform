@@ -26,7 +26,7 @@ export const SingleJobDetails = ({prop}) => {
                 <div className="relative flex justify-center">
                 <p className="text text-black text-start"  >{showMore ? prop.jobDetailsFromCompany : `${truncatedText}...`}</p>
       {prop.jobDetailsFromCompany.length > textLength && (
-        <div className='showMore absolute bottom-0 text-sm font-semibold text-blue-600 pt-16' 
+        <div className='showMore absolute bottom-0 text-sm font-semibold text-blue-600 pt-16 hover:cursor-pointer' 
         onClick={toggleExpanded}> {showMore ? "Show less" : "Show more"}</div>
       )}                
       
