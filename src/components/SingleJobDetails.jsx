@@ -5,6 +5,9 @@ export const SingleJobDetails = ({prop}) => {
     const textLength=100;
   const truncatedText = prop.jobDetailsFromCompany.slice(0, textLength);
 
+  function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
   const toggleExpanded = () => {
     setShowMore(!showMore);
   };
@@ -16,11 +19,10 @@ export const SingleJobDetails = ({prop}) => {
                 <div className="logo flex items-start w-10 h-10 bg-black rounded-md"></div>
                 <div className="nameLoc flex flex-col pl-4">
                     <div className="companyName text-md text-gray-500 font-semibold flex justify-start">{prop.companyName}</div>
-                    <div className="role text-sm flex justify-start">{prop.jobRole}</div>
-                    <div className="companyLoc text-xs flex justify-start">{prop.location}</div>
+                    <div className="role text-sm flex justify-start">{capitalizeFirstLetter(prop.jobRole)}</div>
+                    <div className="companyLoc text-xs flex justify-start">{capitalizeFirstLetter(prop.location)}</div>
                 </div>
             </div>
-            
             <div className="description flex flex-col mt-6 justify-start">
                 <div className="AboutCompany text-black text-md flex justify-start">About Company:</div>
                 <div className="relative flex justify-center">

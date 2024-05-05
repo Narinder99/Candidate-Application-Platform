@@ -41,7 +41,7 @@ export const Jobs = () => {
             companyName: item.companyName,
             location: item.location,
             jobDetailsFromCompany: item.jobDetailsFromCompany,
-            minExp: item.minExp,
+            minExp: item.minExp !== null ? item.minExp : 0,
             maxExp: item.maxExp,
             logoUrl: item.logoUrl,
           };
