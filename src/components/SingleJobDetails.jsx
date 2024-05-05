@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../components/css/SingleJobDetails.css'
 export const SingleJobDetails = ({prop}) => {
-    //console.log(prop)
+    const [showMore, setShowMore] = useState(false);
+    const textLength=100;
+  const truncatedText = prop.jobDetailsFromCompany.slice(0, textLength);
+
+  const toggleExpanded = () => {
+    setShowMore(!showMore);
+  };
   return (
     <div className='jobsDetail rounded-md shadow-md hover:scale-105 bg-slate-100 p-3'>
         <div className="innerComponent flex flex-col">
@@ -14,12 +20,16 @@ export const SingleJobDetails = ({prop}) => {
                     <div className="companyLoc text-xs flex justify-start">{prop.location}</div>
                 </div>
             </div>
-
+            
             <div className="description flex flex-col mt-6 justify-start">
                 <div className="AboutCompany text-black text-md flex justify-start">About Company:</div>
                 <div className="relative flex justify-center">
-                <div className="text text-black text-start">{prop.jobDetailsFromCompany}</div>
-                <div className='showMore absolute bottom-0 text-sm font-semibold text-blue-600 pt-16'>Show more</div>
+                <p className="text text-black text-start"  >{showMore ? prop.jobDetailsFromCompany : `${truncatedText}...`}</p>
+      {prop.jobDetailsFromCompany.length > textLength && (
+        <div className='showMore absolute bottom-0 text-sm font-semibold text-blue-600 pt-16' 
+        onClick={toggleExpanded}> {showMore ? "Show less" : "Show more"}</div>
+      )}                
+      
             </div>
             </div>
             <div className="experience flex flex-col mt-3">
