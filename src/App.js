@@ -1,10 +1,12 @@
 import './App.css';
+import { Filters } from './components/Filters';
 import { Jobs } from './components/Jobs';
 
 function App() {
   return (
     <div className="App">
-      <div className="text-green-900 bg-orange-300 rounded-xl">Hello World</div>
+      <div className="rounded-xl text-black font-semibold text-xl pt-2">Candidate Application Platform</div>
+      <Filters/>
       <Jobs/>
     </div>
   );
