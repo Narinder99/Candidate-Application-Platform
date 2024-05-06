@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { SingleFilterComponent } from "./SingleFilterComponent";
 import { useSelector, useDispatch } from "react-redux";
-import { addJob } from "./Redux/JobsData";
+import {addFilterData,clearFilterData,addFilter,deleteFilter,deleteFilterType} from './Redux/Filters'
 export const Filters = () => {
   const [inputValue, setInputValue] = useState("");
   const [inputWidth, setInputWidth] = useState("130px"); // Initial width
   const inputRef = useRef(null);
-  const Jobs = useSelector((state) => state.Jobs.Jobs);
   const dispatch = useDispatch();
 
   const dummyData = [
@@ -33,6 +32,10 @@ export const Filters = () => {
   ];
   // Function to handle changes in the input value
   const handleInputChange = (event) => {
+    dispatch(deleteFilterType("companyName"));
+    if(event.target.value.length > 0 ){
+    dispatch(addFilter({ key: "companyName", data: event.target.value }));
+    }
     setInputValue(event.target.value);
     updateInputWidth(); // after every change we have to update the width
   };
@@ -47,18 +50,18 @@ export const Filters = () => {
 
 
   return (
-    <div className="flex flex-wrap justify-start  filters m-10">
+    <div className="flex flex-wrap justify-start  filters m-8">
       {dummyData.map((item,index)=>( // used map to traverse the array and send the data to
-          <div className="m-4">
+          <div className="m-2">
             <SingleFilterComponent
-              className="px-4"
+              className="px-2"
               prop={item}
             ></SingleFilterComponent>
           </div>
         )
       )}
       <div className="flex items-start">
-      <div className="flex m-4 justify-between rounded-md shadow-s border-2 border-gray-300 items-center">
+      <div className="flex m-2 justify-between rounded-md shadow-s border-2 border-gray-300 items-center">
         <input
           ref={inputRef}
           type="text"

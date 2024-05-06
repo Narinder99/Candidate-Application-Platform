@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ClearIcon from "@mui/icons-material/Clear";
+import { useSelector, useDispatch } from "react-redux";
+import {addFilterData,clearFilterList,addFilter,deleteFilter,deleteFilterType} from './Redux/Filters'
 
 export const SingleFilterComponent = ({ prop }) => {
   const [inputValue, setInputValue] = useState("");
@@ -10,6 +12,7 @@ export const SingleFilterComponent = ({ prop }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const inputRef = useRef(null);
   const [filtersList, setFitersList] = useState([]);
+  const dispatch = useDispatch();
 
   // Function to handle changes in the input value
   const handleInputChange = (event) => {
@@ -33,25 +36,33 @@ export const SingleFilterComponent = ({ prop }) => {
   const handleInputClick = (event) => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-  const addFilter = (filter) => {
+
+  const addFilterOnClick = (filter) => {
     if(prop.name === "Experience" || prop.name === "Min Base Pay (Lac)"){// if filters is one of them we will not add multiple filters
       setFitersList([filter]);
+      dispatch(deleteFilterType(prop.name));
+      dispatch(addFilter({ key: prop.name, data: filter }));
     }else{
-    if (!filtersList.includes(filter)) {
-      setFitersList((previous) => [...previous, filter]);
-    }}
+      if (!filtersList.includes(filter)) {
+        setFitersList((previous) => [...previous, filter]);
+        dispatch(addFilter({ key: prop.name, data: filter }));
+    }}    
     setIsDropdownOpen(false)
   };
-  const clearFilter = (event) => {
+
+  const clearFilterOnClick = (event) => {
     setFitersList([]);
     event.stopPropagation();
     setIsDropdownOpen(false)
-
+    dispatch(deleteFilterType(prop.name));
+    
   };
-  const removeItemFromFilter = (item, event) => {
+
+  const removeItemFromFilterOnClick = (item, event) => {
     setFitersList((previous) => previous.filter((filter) => filter !== item));
     setIsDropdownOpen(false);
-      event.stopPropagation();
+    event.stopPropagation();
+    dispatch(deleteFilter({ key: prop.name, data: item }));
   };
   return (
     <div className="flex flex-col">
@@ -64,7 +75,7 @@ export const SingleFilterComponent = ({ prop }) => {
             <div className="name text-gray-800 ">{item}</div>
             <ClearIcon
               className="clearCurrentFilter p-1"
-              onClick={(event) => removeItemFromFilter(item, event)}
+              onClick={(event) => removeItemFromFilterOnClick(item, event)}
             ></ClearIcon>
           </div>
         ))}
@@ -80,7 +91,7 @@ export const SingleFilterComponent = ({ prop }) => {
         {filtersList.length > 0 && (
           <ClearIcon
             className="clearAllFilters p-1"
-            onClick={clearFilter}
+            onClick={clearFilterOnClick}
           ></ClearIcon>
         )}
         <div className="border-l-2 border-gray-400 px-2">
@@ -92,7 +103,7 @@ export const SingleFilterComponent = ({ prop }) => {
           {prop.data.map((item, index) => (
             <div
               className="text-gray-500 text-md p-2 flex justify-start hover:bg-slate-200 pl-4 hover:cursor-pointer"
-              onClick={() => addFilter(item)}
+              onClick={() => addFilterOnClick(item)}
             >
               {item}
             </div>

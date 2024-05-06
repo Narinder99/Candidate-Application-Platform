@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import '../components/css/SingleJobDetails.css'
 export const SingleJobDetails = ({prop}) => {
-    const [showMore, setShowMore] = useState(false);
-    const textLength=100;
+  const [showMore, setShowMore] = useState(false);
+  const textLength=100;
   const truncatedText = prop.jobDetailsFromCompany.slice(0, textLength);
 
   function capitalizeFirstLetter(str) {
@@ -16,8 +16,16 @@ export const SingleJobDetails = ({prop}) => {
         <div className="innerComponent flex flex-col">
 
             <div className="jobName flex">
-                <div className="logo flex items-start w-10 h-10 bg-black rounded-md"></div>
-                <div className="nameLoc flex flex-col pl-4">
+            <div
+  className="logo flex items-start w-10 h-10 rounded-md"
+  style={{
+    backgroundImage: `url(${prop.logoUrl})`,
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    objectFit: 'contain',
+  }}
+></div>                <div className="nameLoc flex flex-col pl-4">
                     <div className="companyName text-md text-gray-500 font-semibold flex justify-start">{prop.companyName}</div>
                     <div className="role text-sm flex justify-start">{capitalizeFirstLetter(prop.jobRole)}</div>
                     <div className="companyLoc text-xs flex justify-start">{capitalizeFirstLetter(prop.location)}</div>
@@ -38,7 +46,7 @@ export const SingleJobDetails = ({prop}) => {
                 <div className="text-md text-gray-500 text-md flex justify-start">Minimum Experience:</div>
                 <div className="experienceYear text-gray-700 text-sm flex justify-start">{prop.minExp} Years</div>
             </div>
-            <div className="apply mt-3 bg-orange-700 text-white rounded-md shadow-md p-2 flex justify-center items-center hover:cursor-pointer ">Apply</div>
+            <div className="apply mt-3 bg-orange-800 text-white rounded-md shadow-md p-2 flex justify-center items-center hover:cursor-pointer ">Apply</div>
         </div>
 
     </div>
